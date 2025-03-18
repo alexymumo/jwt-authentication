@@ -20,4 +20,10 @@ public class ProductController {
     public ResponseEntity<Product> registerProduct(@RequestBody Product product) {
         return ResponseEntity.ok(productService.createProduct(product));
     }
+
+
+    @GetMapping("/products")
+    public List<Product> getProducts() {
+        return productService.getProducts();
+    }
 }
