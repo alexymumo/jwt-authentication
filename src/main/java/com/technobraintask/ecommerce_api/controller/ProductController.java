@@ -37,11 +37,6 @@ public class ProductController {
         return ResponseEntity.ok("Deleted Product Successfully");
     }
 
-    /*
-    @DeleteMapping("/{id}")
-    public void deleteProductById(@PathVariable("id") Long id) {
-        productService.deleteProductById(id);
-    }*/
 
     @PutMapping("/{id}")
     public void updateProductById(Long id) {

@@ -29,9 +29,6 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    public void updateProductById(Long id) {
-
-    }
 
     //delete
 
