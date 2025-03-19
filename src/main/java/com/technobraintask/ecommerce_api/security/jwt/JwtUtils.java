@@ -20,9 +20,9 @@ import java.util.Date;
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    @Value("$security.jwt.secret-key")
+    @Value("${security.jwt.secret-key}")
     private String jwtSecret;
-    @Value("$security.jwt.expiration-time")
+    @Value("${security.jwt.expiration-time}")
     private int jwtExpiration;
 
     public Key key() {
