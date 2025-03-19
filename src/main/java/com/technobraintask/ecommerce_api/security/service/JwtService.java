@@ -1,6 +1,5 @@
-package com.technobraintask.ecommerce_api.security.jwt;
+package com.technobraintask.ecommerce_api.security.service;
 
-import com.technobraintask.ecommerce_api.security.AuthEntryPoint;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -11,14 +10,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
 
-@Component
-public class JwtUtils {
-    private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
+@Service
+public class JwtService {
+    private static final Logger logger = LoggerFactory.getLogger(JwtService.class);
 
     @Value("${security.jwt.secret-key}")
     private String jwtSecret;
@@ -50,7 +49,7 @@ public class JwtUtils {
             Jwts.parserBuilder().setSigningKey(key()).build().parse(authToken);
             return true;
         } catch (MalformedJwtException malformedJwtException) {
-            logger.error("invalid token", malformedJwtException.getMessage());
+            logger.error("invalid token {}", malformedJwtException.getMessage());
         }
         return false;
     }
