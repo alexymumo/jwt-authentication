@@ -30,13 +30,7 @@ public class ProductService {
     }
 
 
-    //delete
-
-    //update
-
-    //getByID
-
-    //Paging
-
-
+    public Product updateProduct(Product updatedProduct) {
+        return productRepository.save(updatedProduct);
+    }
 }

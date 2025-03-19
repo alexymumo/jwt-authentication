@@ -1,7 +1,6 @@
 package com.technobraintask.ecommerce_api.controller;
 
 import com.technobraintask.ecommerce_api.models.Product;
-import com.technobraintask.ecommerce_api.repository.ProductRepository;
 import com.technobraintask.ecommerce_api.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,9 +36,13 @@ public class ProductController {
         return ResponseEntity.ok("Deleted Product Successfully");
     }
 
-
     @PutMapping("/{id}")
-    public void updateProductById(Long id) {
+    public ResponseEntity<Product> updateProductById(@PathVariable("id") Long id,@RequestBody Product product) {
+        Optional<Product> exists = this.productService.getProductById(id);
+        if (exists.isPresent()) {
+            productService.updateProduct(product);
+        }
+        return ResponseEntity.ok(product);
 
     }
 }
