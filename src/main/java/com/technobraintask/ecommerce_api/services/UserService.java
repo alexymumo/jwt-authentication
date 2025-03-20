@@ -1,9 +1,12 @@
 package com.technobraintask.ecommerce_api.services;
 
+import com.technobraintask.ecommerce_api.dto.LoginDto;
 import com.technobraintask.ecommerce_api.dto.RegisterDto;
 import com.technobraintask.ecommerce_api.models.User;
 import com.technobraintask.ecommerce_api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,10 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+
 
     public User createUser(RegisterDto registerDto) {
         User user = new User();
@@ -29,6 +36,14 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
        return userRepository.save(user);
 
+    }
+
+    public User loginUser(LoginDto loginDto) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                loginDto.getUsername(),
+                loginDto.getPassword()
+        ));
+        return userRepository.findUserByEmail(loginDto.getUsername()).orElseThrow();
     }
 
 }
