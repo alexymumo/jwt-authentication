@@ -5,13 +5,13 @@ import com.technobraintask.ecommerce_api.dto.RegisterDto;
 import com.technobraintask.ecommerce_api.models.User;
 import com.technobraintask.ecommerce_api.response.LoginResponse;
 import com.technobraintask.ecommerce_api.security.service.JwtService;
-import com.technobraintask.ecommerce_api.services.UserService;
+import com.technobraintask.ecommerce_api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/users")
+@RequestMapping("/auth")
 public class UserController {
 
     @Autowired

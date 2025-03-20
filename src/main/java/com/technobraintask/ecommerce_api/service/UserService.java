@@ -1,4 +1,4 @@
-package com.technobraintask.ecommerce_api.services;
+package com.technobraintask.ecommerce_api.service;
 
 import com.technobraintask.ecommerce_api.dto.LoginDto;
 import com.technobraintask.ecommerce_api.dto.RegisterDto;
@@ -9,8 +9,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserService {

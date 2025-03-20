@@ -1,14 +1,13 @@
 package com.technobraintask.ecommerce_api.controller;
 
 import com.technobraintask.ecommerce_api.models.Product;
-import com.technobraintask.ecommerce_api.services.ProductService;
+import com.technobraintask.ecommerce_api.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.technobraintask.ecommerce_api.services;
+package com.technobraintask.ecommerce_api.service;
 
 import com.technobraintask.ecommerce_api.models.Product;
 import com.technobraintask.ecommerce_api.repository.ProductRepository;
