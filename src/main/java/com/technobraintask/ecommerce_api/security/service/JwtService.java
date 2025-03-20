@@ -69,23 +69,24 @@ public class JwtService {
         return Jwts.builder()
                 .setClaims(extractClaims)
                 .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime()+jwtExpiration))
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
                 .signWith(key(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public String getUsernameFromToken(String authToken) {
-        return Jwts.parserBuilder().setSigningKey(key()).build().parseClaimsJwt(authToken).getBody().getSubject();
+
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername())) && isTokenExpired(token);
     }
 
-    public boolean validateToke(String authToken) {
-        try {
-            Jwts.parserBuilder().setSigningKey(key()).build().parse(authToken);
-            return true;
-        } catch (MalformedJwtException malformedJwtException) {
-            logger.error("invalid token {}", malformedJwtException.getMessage());
-        }
-        return false;
+    private boolean isTokenExpired(String token) {
+        return tokenExpirationTime(token).before(new Date());
     }
+
+    private Date tokenExpirationTime(String token) {
+        return extractClaim(token,Claims::getExpiration);
+    }
+
 }

@@ -60,15 +60,19 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/v1/users/**").permitAll()
+                        .anyRequest().authenticated())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/users/**").permitAll().anyRequest().authenticated())
-                .addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-                .authenticationProvider(daoAuthenticationProvider());
+
+                .authenticationProvider(daoAuthenticationProvider())
+                .addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
 
     }
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
@@ -80,8 +84,7 @@ public class WebSecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**",corsConfiguration);
         return source;
-
-
     }
+
 }
 
