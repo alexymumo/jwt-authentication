@@ -1,4 +1,4 @@
-package com.technobraintask.ecommerce_api.config;
+package com.technobraintask.ecommerce_api.security.jwt;
 
 
 import jakarta.servlet.ServletException;
