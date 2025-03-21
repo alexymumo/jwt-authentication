@@ -18,13 +18,15 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
 
 
 @Component
 public class AuthTokenFilter extends OncePerRequestFilter {
-
+    @Autowired
+    private HandlerExceptionResolver handlerExceptionResolver;
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
     @Autowired
@@ -38,8 +40,10 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain) throws ServletException, IOException
     {
-        String authHeader = request.getHeader("Authorization");
+        final String authHeader = request.getHeader("Authorization");
+
         logger.debug("Authorization Header: {}",authHeader);
+
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request,response);
             return;
@@ -48,8 +52,11 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             final String jwt = authHeader.substring(7);
             final String username = jwtService.extractUsername(jwt);
 
+            System.out.println(username);
+
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (username != null || authentication == null) {
+
+            if (username != null && authentication == null) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 if (jwtService.isTokenValid(jwt,userDetails)) {
                     UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
@@ -63,7 +70,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             }
             filterChain.doFilter(request,response);
         } catch (Exception exception) {
-            exception.getMessage();
+            handlerExceptionResolver.resolveException(request,response,null,exception);
         }
 
     }

@@ -28,7 +28,7 @@ public class UserService {
 
     public User createUser(RegisterDto registerDto) {
         User user = new User();
-        user.setUsername(registerDto.getUsername());
+        user.setFullName(registerDto.getFullName());
         user.setEmail(registerDto.getEmail());
         user.setPhone(registerDto.getPhone());
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
@@ -38,10 +38,10 @@ public class UserService {
 
     public User loginUser(LoginDto loginDto) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                loginDto.getUsername(),
+                loginDto.getEmail(),
                 loginDto.getPassword()
         ));
-        return userRepository.findUserByEmail(loginDto.getUsername()).orElseThrow();
+        return userRepository.findUserByEmail(loginDto.getEmail()).orElseThrow();
     }
 
 }

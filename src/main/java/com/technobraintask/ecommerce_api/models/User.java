@@ -18,9 +18,12 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userid;
-    private String username;
+    private String fullName;
+
+    @Column(unique = true,nullable = false)
     private String email;
     private String phone;
+    @Column(nullable = false)
     private String password;
     @CreationTimestamp
     private Date createdAt;
@@ -30,6 +33,15 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     @Override
