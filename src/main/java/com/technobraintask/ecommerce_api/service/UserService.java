@@ -35,7 +35,7 @@ public class UserService {
 
 
     public User createUser(RegisterDto registerDto) {
-        Optional<Role> roleOptional = roleRepository.findByName(RoleEnum.USER);
+        Optional<Role> roleOptional = roleRepository.findByName(RoleEnum.ADMIN);
         if (roleOptional.isEmpty()) {
             return null;
         }
@@ -45,7 +45,10 @@ public class UserService {
         user.setPhone(registerDto.getPhone());
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
         user.setRole(roleOptional.get());
+        System.out.println(user);
        return userRepository.save(user);
+
+
 
     }
 
