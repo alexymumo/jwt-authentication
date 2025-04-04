@@ -68,4 +68,9 @@ public class ProductController {
         return ResponseEntity.ok(product);
 
     }
+
+    @GetMapping("/report")
+    public String generateReport() {
+        return productService.generateReports();
+    }
 }

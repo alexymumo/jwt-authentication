@@ -7,17 +7,22 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 
-@Table(name = "role")
+@Table(name = "roles")
 @Entity
 @Data
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(unique = true,nullable = false)
     @Enumerated(EnumType.STRING)
-    private RoleEnum roleEnum;
+    private RoleEnum name;
+
+    @Column(updatable = false)
     @CreationTimestamp
     private Date createdAt;
+
     @UpdateTimestamp
     private Date updatedAt;
 }

@@ -39,8 +39,6 @@ public class UserService {
         if (roleOptional.isEmpty()) {
             return null;
         }
-
-
         User user = new User();
         user.setFullName(registerDto.getFullName());
         user.setEmail(registerDto.getEmail());

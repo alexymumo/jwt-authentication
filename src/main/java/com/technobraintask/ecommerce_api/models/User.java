@@ -19,15 +19,23 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userid;
+
+    @Column(nullable = false)
     private String fullName;
 
     @Column(unique = true,nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String phone;
+
     @Column(nullable = false)
     private String password;
+
     @CreationTimestamp
+    @Column(updatable = false)
     private Date createdAt;
+
     @UpdateTimestamp
     private Date updatedAt;
 
@@ -37,8 +45,8 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getRoleEnum().toString());
-        return List.of();
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getName().toString());
+        return List.of(authority);
     }
 
     @Override
