@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,8 +38,9 @@ public class UserController {
             }
     )
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody RegisterDto registerDto) {
+    public ResponseEntity<User> register(@Valid @RequestBody RegisterDto registerDto) {
         User user = userService.createUser(registerDto);
+        System.out.println(user);
         return ResponseEntity.ok(user);
     }
 
@@ -51,7 +53,7 @@ public class UserController {
             }
     )
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginDto loginDto) {
         User user = userService.loginUser(loginDto);
         String jwtToken = jwtService.generateToken(user);
 
